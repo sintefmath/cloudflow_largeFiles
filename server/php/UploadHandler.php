@@ -1079,7 +1079,8 @@ class UploadHandler
                 } else {
                     error_log("UploadHandler - move upload file from ". $uploaded_file . " "
                             . "to " . $file_path);
-                    move_uploaded_file($uploaded_file, $file_path);
+                    $movedFile = move_uploaded_file($uploaded_file, $file_path);
+                    error_log("move_uploaded_file returned " . $movedFile);
                 }
             } else {
                 // Non-multipart uploads (PUT method support)
