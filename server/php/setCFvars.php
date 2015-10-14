@@ -10,7 +10,7 @@ try {
     }
     
     $gssPath = $_POST["gssPath"];
-    if(setcookie("CF_GSS_PATH". $gssPath, time()+3600)) {
+    if(setcookie("CF_GSS_PATH", $gssPath, time()+3600)) {
         error_log("CF_GSS_PATH cookie is sat to " . $_COOKIE["CF_GSS_PATH"] . ", while gssPath is ". $gssPath);
     }
     else {
