@@ -200,9 +200,13 @@ class UploadHandler
         $sessionToken = $_COOKIE["CF_TOKEN"];
         
         // Use the keystone client to get username here
+        // Tell the client that you are not allowed if this is not fine (can also add the CF header auth part here?)
         $username = $sessionToken;
+        
+        $gssPath = $_COOKIE["CF_GSS_PATH"];
+        $up_dir = str_replace("csuc://".$username, "/home/ubuntu/webdav", $gssPath);
                 
-        return "/home/ubuntu/webdav/" . $username . "/";
+        return $up_dir;
     }
     
     

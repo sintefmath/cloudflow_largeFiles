@@ -6,7 +6,8 @@
 
 
 
-var sessionToken = "abc";
+var sessionToken = "abc"; // act as both username and token
+var gssPath = "csuc://abc/subdir/";
 
 if ( parent ) {
     
@@ -18,9 +19,9 @@ function setToken(token) {
     xhr.onload = function(data) {
         console.log("token sat");
     }
-    xhr.open("POST", "server/php/setToken.php", true);
+    xhr.open("POST", "server/php/setCFvars.php", true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.send('sessionToken=' + sessionToken);
+    xhr.send('sessionToken=' + sessionToken + "&gssPath=" + gssPath);
     console.log("Sent token");
 }
 
