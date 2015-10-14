@@ -1,3 +1,8 @@
+# Large file support for CloudFlow
+
+This repo is a fork from [jQuery File Upload Plugin](https://github.com/blueimp/jQuery-File-Upload) where the demo is modified to support CloudFlow's requirements for handling large files. 
+
+
 # jQuery File Upload Plugin
 
 ## Demo
