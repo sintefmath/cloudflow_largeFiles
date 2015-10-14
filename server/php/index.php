@@ -11,5 +11,8 @@
  */
 
 error_reporting(E_ALL | E_STRICT);
+error_log("Reached server/php/index.php");
 require('UploadHandler.php');
 $upload_handler = new UploadHandler();
+
+?>

@@ -44,7 +44,8 @@ class UploadHandler
         $this->response = array();
         $this->options = array(
             'script_url' => $this->get_full_url().'/'.basename($this->get_server_var('SCRIPT_NAME')),
-            'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/',
+            //'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/',
+            'upload_dir' => '/home/ubuntu/webdav/largeFiles/',
             'upload_url' => $this->get_full_url().'/files/',
             'user_dirs' => false,
             'mkdir_mode' => 0755,
@@ -1076,6 +1077,8 @@ class UploadHandler
                         FILE_APPEND
                     );
                 } else {
+                    error_log("UploadHandler - move upload file from ". $uploaded_file . " "
+                            . "to " . $file_path);
                     move_uploaded_file($uploaded_file, $file_path);
                 }
             } else {
@@ -1121,6 +1124,7 @@ class UploadHandler
     }
 
     protected function body($str) {
+        error_log("UploadHandler::Body: " . $str);
         echo $str;
     }
 
