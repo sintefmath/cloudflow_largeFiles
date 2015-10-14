@@ -18,7 +18,7 @@ function setToken(token) {
     xhr.onload = function(data) {
         console.log("token sat");
     }
-    xhr.open("POST", "../server/php/setToken.php" + token, true);
+    xhr.open("POST", "../server/php/setToken.php", true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.send('sessionToken=' + sessionToken);
     console.log("Sent token");
