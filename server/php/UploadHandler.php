@@ -45,7 +45,8 @@ class UploadHandler
         $this->options = array(
             'script_url' => $this->get_full_url().'/'.basename($this->get_server_var('SCRIPT_NAME')),
             //'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/',
-            'upload_dir' => '/home/ubuntu/webdav/largeFiles/',
+            //'upload_dir' => '/home/ubuntu/webdav/largeFiles/',
+            'upload_dir' => $this->get_upload_dir(),
             'upload_url' => $this->get_full_url().'/files/',
             'user_dirs' => false,
             'mkdir_mode' => 0755,
@@ -192,6 +193,19 @@ class UploadHandler
                 $this->header('HTTP/1.1 405 Method Not Allowed');
         }
     }
+    
+    
+    protected function get_upload_dir() {
+        
+        $sessionToken = $_COOKIE["CF_TOKEN"];
+        
+        // Use the keystone client to get username here
+        $username = $sessionToken;
+                
+        return "/home/ubuntu/webdav/" . $username . "/";
+    }
+    
+    
 
     protected function get_full_url() {
         $https = !empty($_SERVER['HTTPS']) && strcasecmp($_SERVER['HTTPS'], 'on') === 0 ||
