@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>TODO write content</div>
+    </body>
+</html>
+-->
+
+
+
+
+<html>
+    <head>
+        <title>CloudFlow Large File Uploader - iframe</title>
+        <style>
+            html, body  {
+                height: 100%;
+                overflow: hidden
+            }
+            html, body, iframe {
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+        <script type='text/javascript'>
+            // Set the variables so that the HTML page in the iframe will have access to them through parent
+            sessionToken = "abc";
+            serviceID = "123";
+            gssFolder = "csuc://abc/iframe/";
+            WFMsoap = "https://WFM-soap.com?wsdlFTW";
+            hasCloudflowVariables = true;
+            console.log("Sat variables in parent");
+        </script>
+    </head>
+    <body>
+        <iframe src='cloudflow.html' width='100%' height='100%' seamless='1' style='height: 100%; width: 100%;border-style: none; overflow: hidden;'></iframe>
+    </body>
+</html>
+
