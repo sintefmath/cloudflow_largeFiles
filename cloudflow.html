@@ -45,19 +45,13 @@
 </div>
 <div class="container">
     <h1>CloudFlow upload large file</h1>
-    <h2 class="lead">Basic Plus version</h2>
-    <ul class="nav nav-tabs">
-        <li><a href="basic.html">Basic</a></li>
-        <li class="active"><a href="basic-plus.html">Basic Plus</a></li>
-        <li><a href="index.html">Basic Plus UI</a></li>
-    </ul>
-    <br>
+    <h2 class="lead">The CloudFlow version</h2>
     <blockquote>
         <p> Here we will try to find the look and feel of the web application for uploading large files to CSUC (for the first round at least).
         
-        <p>File Upload widget with multiple file selection, drag&amp;drop support, progress bar, validation and preview images, audio and video for jQuery.<br>
-        Supports cross-domain, chunked and resumable file uploads and client-side image resizing.<br>
-        Works with any server-side platform (PHP, Python, Ruby on Rails, Java, Node.js, Go etc.) that supports standard HTML form file uploads.</p>
+        <p>File Upload widget with multiple file selection, drag&amp;drop support, progress bar and validation for jQuery.<br>
+        Supports cross-domain (not validated), chunked (not yet) and resumable (not yet) file uploads.<br>
+        Should be used with any the PHP server sat up in the same project.</p>
     </blockquote>
     <br>
     <!-- The fileinput-button span is used to style the file input field as button -->
@@ -82,12 +76,24 @@
         </div>
         <div class="panel-body">
             <ul>
-                <li>The maximum file size for uploads in this demo is <strong>999 KB</strong> (default file size is unlimited).</li>
-                <li>Only image files (<strong>JPG, GIF, PNG</strong>) are allowed in this demo (by default there is no file type restriction).</li>
-                <li>Uploaded files will be deleted automatically after <strong>5 minutes or less</strong> (demo files are stored in memory).</li>
-                <li>You can <strong>drag &amp; drop</strong> files from your desktop on this webpage (see <a href="https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support">Browser support</a>).</li>
-                <li>Please refer to the <a href="https://github.com/blueimp/jQuery-File-Upload">project website</a> and <a href="https://github.com/blueimp/jQuery-File-Upload/wiki">documentation</a> for more information.</li>
-                <li>Built with the <a href="http://getbootstrap.com/">Bootstrap</a> CSS framework and Icons from <a href="http://glyphicons.com/">Glyphicons</a>.</li>
+                <li>The folder should have been chosen already.</li>
+                <li>A keystone token is necessary. The user should also have its HPC directory made available through the webdav interface.</li>
+                <li>Download should be done through the file chooser.</li>
+                <li>Should be accessed through an iframe defining the relevant js variables.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Workflow related instructions</h3>
+        </div>
+        <div class="panel-body">
+            This page should be accessed roughly like this in CloudFlow:
+            <ul>
+                <li>File Chooser is extended with "Upload Large File" context-menu, starting a Web Application with this part.</li>
+                <li>The user uploads files here. They will go into the folder chosen from the File Chooser.</li>
+                <li>When the user is happy, the "Finished uploading" button is pressed. The view should then go back to the FileChooser that started the Large File Uploader.</li>
+                <li>The user needs to refresh the folder to see the new files... FC can be "paused" by a pop up - need to press "Okay" to confirm upload done and refresh.</li>
             </ul>
         </div>
     </div>
