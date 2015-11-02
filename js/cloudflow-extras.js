@@ -20,15 +20,15 @@ if ( parent ) {
         }
         if (parent.gssPath !== 'undefined' && parent.gssPath !== "") {
             gssPath = parent.gssPath;
-            console.log("Found parent.gssPath");
+            console.log("Found parent.gssPath: " + gssPath);
         }
         if (parent.soapWFM !== 'undefined' && parent.soapWFM !== "") {
             soapWFM = parent.soapWFM;
-            console.log("Found parent.soapWFM");
+            console.log("Found parent.soapWFM: " + soapWFM);
         }
         if (parent.serviceID !== 'undefined' && parent.serviceID !== "") {
             serviceID = parent.serviceID;
-            console.log("Found parent.serviceID");
+            console.log("Found parent.serviceID: " + serviceID);
         }
     }
     else {
@@ -37,19 +37,19 @@ if ( parent ) {
     // Look in parent for sessionToken as before...
 }
 
-function setToken(token) {
+function setCookies() {
     var xhr = new XMLHttpRequest();
     xhr.onload = function(data) {
-        console.log("token sat");
+        console.log("Cookies sat");
     }
     xhr.open("POST", "server/php/setCFvars.php", true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.send('sessionToken=' + sessionToken + "&gssPath=" + gssPath);
-    console.log("Sent token");
+    console.log("Sent cookies");
 }
 
 
-setToken(sessionToken);
+setToken();
 
 
 
