@@ -199,7 +199,9 @@ class UploadHandler
         
         $sessionToken = $_COOKIE["CF_TOKEN"];
         
-        // Use the keystone client to get username here
+        // 1) Use the keystone client to get username here.
+        // 2) Check username with path
+        // 3) if it is wrong - send a 401 Unauthorized in return.
         // Tell the client that you are not allowed if this is not fine (can also add the CF header auth part here?)
         $username = $sessionToken;
         
