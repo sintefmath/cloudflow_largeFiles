@@ -38,7 +38,10 @@ class UploadHandler
         'max_height' => 'Image exceeds maximum height',
         'min_height' => 'Image requires a minimum height',
         'abort' => 'File upload aborted',
-        'image_resize' => 'Failed to resize image'
+        'image_resize' => 'Failed to resize image',
+        'cf_unauthorized' => 'Invalid keystone token',
+        'cf_invalid_path' => 'Not write access to given path. Keystone username not the same as gss folder.',
+        'cf_missing_folder' => 'Found no webdav folder for given user'
     );
 
     protected $image_objects = array();
@@ -223,6 +226,31 @@ class UploadHandler
         return $up_dir;
     }
     
+    protected function validate_CloudFlow() {
+        /**
+         *  Perform three checks: 
+         *  1) Valid keystone token
+         *  2) same keystone username as in gssPath
+         *  3) does user have a webdav enabled folder?
+         * 
+         *  returns one of the above, or 0 if all is good :)
+         */
+
+        
+        $sessionToken = $_COOKIE["CF_TOKEN"];
+        $gssPath = $_COOKIE["CF_GSS_PATH"];
+        
+        try {
+            // Try to get username
+            $uname = keystone_get_username($sessionToken);
+            error_log("Found uname: " . $uname);
+        } catch (Exception $e) {
+            error_log("Did not find username from keystone");
+            return 1;
+        }
+        return 0;
+    }
+    
     
 
     protected function get_full_url() {
@@ -398,6 +426,15 @@ class UploadHandler
             $file->error = $this->get_error_message($error);
             return false;
         }
+        
+        // CloudFlow validation:
+        // make a function that checks keystone token, token vs gss url, and username folder existence.
+        $cf_error = $this->validate_CloudFlow();
+        if ($cf_error == 1) {
+            $file->error = $this->get_error_message('cf_unauthorized');
+            return false;
+        }
+        
         $content_length = $this->fix_integer_overflow(
             (int)$this->get_server_var('CONTENT_LENGTH')
         );
@@ -475,6 +512,8 @@ class UploadHandler
                 return false;
             }
         }
+        
+        error_log("validate() - All good :)");
         return true;
     }
 
