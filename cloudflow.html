@@ -204,9 +204,7 @@ $(function () {
     }).on('fileuploaddone', function (e, data) {
         $.each(data.result.files, function (index, file) {
             if (file.url) {
-                var link = $('<a>')
-                    .attr('target', '_blank')
-                    .prop('href', file.url);
+                var link = $('<div>').html(file.url + " uploaded successfully");
                 $(data.context.children()[index])
                     .wrap(link);
             } else if (file.error) {
