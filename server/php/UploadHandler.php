@@ -248,6 +248,18 @@ class UploadHandler
             error_log("Did not find username from keystone");
             return 1;
         }
+        
+        $splittedPath = explode("/",str_replace("csuc://", "", $gssPath));
+        if ($uname != $splittedPath[0]) {
+            return 2;
+        }
+        
+        $folder = "/home/ubuntu/webdav/" . $uname;
+        if (!file_exists($folder)) {
+            return 3;
+        }
+        
+        
         return 0;
     }
     
@@ -433,8 +445,14 @@ class UploadHandler
         if ($cf_error == 1) {
             $file->error = $this->get_error_message('cf_unauthorized');
             return false;
+        } else if ($cf_error == 2) {
+            $file->error = $this->get_error_message('cf_invalid_path');
+            return false;
+        } else if ($cf_error == 3) {
+            $file->error = $this->get_error_message('cf_missing_folder');
+            return false;
         }
-        
+
         $content_length = $this->fix_integer_overflow(
             (int)$this->get_server_var('CONTENT_LENGTH')
         );
