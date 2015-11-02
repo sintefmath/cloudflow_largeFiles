@@ -52,5 +52,40 @@ function setCookies() {
 setCookies();
 
 
+function done() {
+    console.log("We should proceed to the next step now");
+
+    var xmlOutputs_base64 = "";
+    //xmlOutputs = "<fileKey>" + filekey + "</fileKey>";
+    //xmlOutputs_base64 = btoa(xmlOutputs);
+
+    var namespace = "http://www.eu-cloudflow.eu/dfki/WorkflowManager2/";
+    var messageName ="serviceExecutionFinished";
+    var xmlToSend=  '<soapenv:Envelope '
+            + 'xmlns:ns="' +  namespace + '" '
+            + 'xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">' 
+            + ' <soapenv:Header />'
+            + ' <soapenv:Body>'
+            // We assume we only have one relevant namespace...
+            + "<ns:" + messageName + '>'
+            + "<serviceID>" + serviceID + "</serviceID>"
+            + "<sessionToken>" + sessionToken + "</sessionToken>"
+            + "<xmlOutputs_base64>" + xmlOutputs_base64 + "</xmlOutputs_base64>"
+            // ARGUMENTER HER <ns:serviceID>....</ns:serviceID>;
+            + "</ns:" + messageName + ">"
+            + ' </soapenv:Body>'
+            + '</soapenv:Envelope>';
+    var endpointURL = soapWFM.replace("?wsdl", "");
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function(data) {
+        console.log("Succesfully received a response from WFM");
+    };
+    xhr.open("POST", endpointURL, true);
+    xhr.setRequestHeader("Content-Type", "text/xml");
+    xhr.setRequestHeader("Accept", "text/xml");
+    xhr.setRequestHeader("SOAPAction", "http://www.eu-cloudflow.eu/dfki/WorkflowManager2/serviceExecutionFinished");
+    xhr.send(xmlToSend);
+}
+
 
 
