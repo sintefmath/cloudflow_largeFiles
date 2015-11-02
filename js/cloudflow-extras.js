@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 
-
-
 var sessionToken = "abc"; // act as both username and token
 var gssPath = "csuc://abc/subdir/";
 var soapWFM = "dinada";

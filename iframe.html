@@ -14,12 +14,31 @@
         </style>
         <script type='text/javascript'>
             // Set the variables so that the HTML page in the iframe will have access to them through parent
-            sessionToken = "abc";
-            serviceID = "123";
-            gssPath = "csuc://abc/iframe/";
-            soapWFM = "https://WFM-soap.com?wsdlFTW";
-            hasCloudflowVariables = true;
+            var sessionToken = "abc";
+            var serviceID = "123";
+            var gssPath = "csuc://abc/iframe/";
+            var soapWFM = "https://WFM-soap.com?wsdlFTW";
+            var hasCloudflowVariables = true;
             console.log("Sat variables in parent");
+            
+            
+            function getURLparam( param, url ) {
+                if (!url) url = location.href;
+                param = param.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+                var regexS = "[\\?&]"+param+"=([^&#]*)";
+                var regex = new RegExp( regexS );
+                var results = regex.exec( url );
+                return results == null ? "" : results[1];
+            }
+            
+            var url_token = getURLparam("token", document.location.search);
+            if (url_token !== "") {
+                sessionToken = url_token;
+                console.log ("token from url");
+            }
+            
+
+            
         </script>
     </head>
     <body>
