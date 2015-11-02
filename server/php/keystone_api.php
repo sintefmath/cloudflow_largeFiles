@@ -221,7 +221,12 @@ EOD;
         curl_close($curlHandle);
         
         // Keystone either returns 200 or 203 when everything is OK
-        if (array_key_exists("access", $result) && array_key_exists("user", $result["access"]) && array_key_exists("username", $result["access"]["token"])) {
+        if ($returnCode != 200 && $returnCode != 203) {
+            error_log("Wrong return code = $returnCode");
+            throw new Exception("Invalid return code when obtaining username from keystone: " . $returnCode);
+        }
+        
+        if (array_key_exists("access", $result) && array_key_exists("user", $result["access"]) && array_key_exists("username", $result["access"]["user"])) {
             // We set the default expiration time for one day 
             // @todo read the Keystone expiration time instead of hardcoding it
             return $result['access']['user']['username'];
