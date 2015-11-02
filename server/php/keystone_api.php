@@ -182,6 +182,55 @@ EOD;
         return true;
     }
 
+    
+    
+     /**
+     * Obtain a user's username from its token.
+     * 
+     * @param String $token the token id to validate
+     * @return username if valid token
+     * 
+     * @throws Exception if something bad happens (wrong username/password), 
+     *                   connection issues, etc. 
+     */
+    public function getUsername($token) {
+        // Our strategy is to send a GET request to 
+        // <keystone admin url>/v2.0/tokens/$token
+        // This will generate a 203 og 200 if everything went OK,
+        // ie. if it is a valid token.
+        
+        $curlHandle = curl_init();
+        
+        // Set the URL
+        curl_setopt($curlHandle, CURLOPT_URL, 
+		    "{$this->adminUrl}v2.0/tokens/$token");
+	
+	// We must set the admin token to validate tokens
+	// the global variable KEYSTONE_ADMIN_TOKEN comes 
+	// from the file keystone_admintoken.php
+	curl_setopt($curlHandle, CURLOPT_HTTPHEADER, 
+		    array("X-Auth-Token: " . KEYSTONE_ADMIN_TOKEN));
+	// Make sure CURL doesn't print the result to stdout:
+        curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, 1);
+	// Execute
+	$result = curl_exec($curlHandle);
+        // Get return code
+        $returnCode = curl_getinfo($curlHandle, CURLINFO_HTTP_CODE);
+        
+        // Close the connection
+        curl_close($curlHandle);
+        
+        // Keystone either returns 200 or 203 when everything is OK
+        if (array_key_exists("access", $result) && array_key_exists("user", $result["access"]) && array_key_exists("username", $result["access"]["token"])) {
+            // We set the default expiration time for one day 
+            // @todo read the Keystone expiration time instead of hardcoding it
+            return $result['access']['user']['username'];
+        } else {
+            // It returned something else than we expected: 
+            throw new Exception("Not valid token.");
+        }
+    }
+    
     /**
      * A small private utility function for issuing HTTP requests to the 
      * Keystone servic
@@ -258,6 +307,17 @@ function keystone_check_login() {
     return $keystone->isLoggedIn($token);
 }
 
+/**
+ * Checks the token id given as input (already read from cookie) against the
+ * keystone service
+ * 
+ * @return username of the user related to the token
+ */
+function keystone_get_username($token) {
+    $keystone = new Keystone(KEYSTONE_URL);
+    return $keystone->getUsername($token);
+}
+ 
 /**
  * Logs the user in and sets the relevant cookie fields.
  * @param String $username
