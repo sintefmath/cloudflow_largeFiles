@@ -9,6 +9,7 @@
 var sessionToken = "abc"; // act as both username and token
 var gssPath = "csuc://abc/subdir/";
 var soapWFM = "dinada";
+var serviceID = "-1";
 
 if ( parent ) {
     if (parent.hasCloudflowVariables !== 'undefined' && parent.hasCloudflowVariables) {
@@ -24,6 +25,10 @@ if ( parent ) {
         if (parent.soapWFM !== 'undefined' && parent.soapWFM !== "") {
             soapWFM = parent.soapWFM;
             console.log("Found parent.soapWFM");
+        }
+        if (parent.serviceID !== 'undefined' && parent.serviceID !== "") {
+            serviceID = parent.serviceID;
+            console.log("Found parent.serviceID");
         }
     }
     else {
