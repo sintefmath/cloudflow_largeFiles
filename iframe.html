@@ -16,7 +16,7 @@
             // Set the variables so that the HTML page in the iframe will have access to them through parent
             var sessionToken = "abc";
             var serviceID = "123";
-            var gssPath = "csuc://abc/iframe/";
+            var gssPath = "csuc://hjelmervik/";
             var soapWFM = "https://WFM-soap.com?wsdlFTW";
             var hasCloudflowVariables = true;
             console.log("Sat variables in parent");
@@ -37,6 +37,11 @@
                 console.log ("token from url");
             }
             
+            var url_path = getURLparam("gssPath", document.location.search);
+            if (url_path !== "") {
+                gssPath = url_path;
+                console.log("path from url");
+            }
 
             
         </script>
