@@ -10,6 +10,9 @@
  * http://www.opensource.org/licenses/MIT
  */
 
+require('keystone_api.php');
+
+
 class UploadHandler
 {
 
@@ -198,12 +201,21 @@ class UploadHandler
     protected function get_upload_dir() {
         
         $sessionToken = $_COOKIE["CF_TOKEN"];
+        $username = "abc";
         
         // 1) Use the keystone client to get username here.
         // 2) Check username with path
         // 3) if it is wrong - send a 401 Unauthorized in return.
         // Tell the client that you are not allowed if this is not fine (can also add the CF header auth part here?)
-        $username = $sessionToken;
+        
+        
+        try {
+            // Try to get username
+            $uname = keystone_get_username($sessionToken);
+            error_log("Found uname: " . $uname);
+        } catch (Exception $e) {
+            error_log("Did not find username from keystone");
+        }
         
         $gssPath = $_COOKIE["CF_GSS_PATH"];
         $up_dir = str_replace("csuc://", "/home/ubuntu/webdav/", $gssPath);
