@@ -8,9 +8,27 @@
 
 var sessionToken = "abc"; // act as both username and token
 var gssPath = "csuc://abc/subdir/";
+var soapWFM = "dinada";
 
 if ( parent ) {
-    
+    if (parent.hasCloudflowVariables !== 'undefined' && parent.hasCloudflowVariables) {
+        console.log("Found CloudFlow variables");
+        if (parent.sessionToken !== 'undefined' && parent.sessionToken !== "") {
+            sessionToken = parent.sessionToken;
+            console.log("Found parent.sessionToken");
+        }
+        if (parent.gssPath !== 'undefined' && parent.gssPath !== "") {
+            gssPath = parent.gssPath;
+            console.log("Found parent.gssPath");
+        }
+        if (parent.soapWFM !== 'undefined' && parent.soapWFM !== "") {
+            soapWFM = parent.soapWFM;
+            console.log("Found parent.soapWFM");
+        }
+    }
+    else {
+        console.log("No CloudFlow variables in sight");
+    }
     // Look in parent for sessionToken as before...
 }
 
