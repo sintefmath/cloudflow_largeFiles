@@ -204,12 +204,13 @@ EOD;
         // Set the URL
         curl_setopt($curlHandle, CURLOPT_URL, 
 		    "{$this->adminUrl}v2.0/tokens/$token");
-	
+                    
 	// We must set the admin token to validate tokens
 	// the global variable KEYSTONE_ADMIN_TOKEN comes 
 	// from the file keystone_admintoken.php
 	curl_setopt($curlHandle, CURLOPT_HTTPHEADER, 
-		    array("X-Auth-Token: " . KEYSTONE_ADMIN_TOKEN));
+		    array('Accept: application/json',
+                    "X-Auth-Token: " . KEYSTONE_ADMIN_TOKEN));
 	// Make sure CURL doesn't print the result to stdout:
         curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, 1);
 	// Execute
