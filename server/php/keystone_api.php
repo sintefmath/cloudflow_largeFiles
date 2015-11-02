@@ -214,7 +214,7 @@ EOD;
 	// Make sure CURL doesn't print the result to stdout:
         curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, 1);
 	// Execute
-	$result = curl_exec($curlHandle);
+	$response = curl_exec($curlHandle);
         // Get return code
         $returnCode = curl_getinfo($curlHandle, CURLINFO_HTTP_CODE);
         
@@ -227,6 +227,9 @@ EOD;
             throw new Exception("Invalid return code when obtaining username from keystone: " . $returnCode);
         }
         
+        // decoding the response
+        $result = json_decode($response, true);
+                
         if (array_key_exists("access", $result) && array_key_exists("user", $result["access"]) && array_key_exists("username", $result["access"]["user"])) {
             // We set the default expiration time for one day 
             // @todo read the Keystone expiration time instead of hardcoding it
