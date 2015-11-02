@@ -25,6 +25,11 @@
 <link rel="stylesheet" href="css/style.css">
 <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
 <link rel="stylesheet" href="css/jquery.fileupload.css">
+
+<!-- The extra CloudFlow functionality -->
+<script src="js/cloudflow-extras.js"></script>
+
+
 </head>
 <body>
 <div class="navbar navbar-default navbar-fixed-top">
@@ -60,6 +65,7 @@
         <!-- The file input field used as target for the file upload widget -->
         <input id="fileupload" type="file" name="files[]" multiple>
     </span>
+    <button id="doneButton" onclick="done();">Done uploading files</button>
     <br>
     <br>
     <!-- The global progress bar -->
@@ -120,9 +126,6 @@
 <script src="js/jquery.fileupload-video.js"></script>
 <!-- The File Upload validation plugin -->
 <script src="js/jquery.fileupload-validate.js"></script>
-
-<!-- The extra CloudFlow functionality -->
-<script src="js/cloudflow-extras.js"></script>
 
 <script>
 /*jslint unparam: true, regexp: true */
