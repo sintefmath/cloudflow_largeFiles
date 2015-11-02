@@ -12,21 +12,21 @@ var soapWFM = "dinada";
 var serviceID = "-1";
 
 if ( parent ) {
-    if (parent.hasCloudflowVariables !== 'undefined' && parent.hasCloudflowVariables) {
+    if (typeof parent.hasCloudflowVariables !== 'undefined' && parent.hasCloudflowVariables) {
         console.log("Found CloudFlow variables");
-        if (parent.sessionToken !== 'undefined' || parent.sessionToken !== "") {
+        if (typeof parent.sessionToken !== 'undefined' && parent.sessionToken !== "") {
             sessionToken = parent.sessionToken;
             console.log("Found parent.sessionToken");
         }
-        if (parent.gssPath !== 'undefined' || parent.gssPath !== "") {
+        if (typeof parent.gssPath !== 'undefined' && parent.gssPath !== "") {
             gssPath = parent.gssPath;
             console.log("Found parent.gssPath: " + gssPath);
         }
-        if (parent.soapWFM !== 'undefined' || parent.soapWFM !== "") {
+        if (typeof parent.soapWFM !== 'undefined' && parent.soapWFM !== "") {
             soapWFM = parent.soapWFM;
             console.log("Found parent.soapWFM: " + soapWFM);
         }
-        if (parent.serviceID !== 'undefined' || parent.serviceID !== "") {
+        if (typeof parent.serviceID !== 'undefined' && parent.serviceID !== "") {
             serviceID = parent.serviceID;
             console.log("Found parent.serviceID: " + serviceID);
         }
