@@ -41,7 +41,8 @@ class UploadHandler
         'image_resize' => 'Failed to resize image',
         'cf_unauthorized' => 'Invalid keystone token',
         'cf_invalid_path' => 'Not write access to given path. Keystone username not the same as gss folder.',
-        'cf_missing_folder' => 'Found no webdav folder for given user'
+        'cf_missing_folder' => 'Found no webdav folder for given user',
+        'cf_missing_subfolder' => 'Upload path does not exist'
     );
 
     protected $image_objects = array();
@@ -232,6 +233,7 @@ class UploadHandler
          *  1) Valid keystone token
          *  2) same keystone username as in gssPath
          *  3) does user have a webdav enabled folder?
+         *  4) does the subfolder exist?
          * 
          *  returns one of the above, or 0 if all is good :)
          */
@@ -254,12 +256,18 @@ class UploadHandler
             return 2;
         }
         
-        $folder = "/home/ubuntu/webdav/" . $uname;
-        if (!file_exists($folder)) {
+        $basePath = "/home/ubuntu/webdav/";
+        $mountedFolder = $basePath . $uname;
+        if (!file_exists($mountedFolder)) {
             return 3;
         }
         
+        $folder = $basePath . str_replace("csuc://", "", $gssPath);
+        if (!file_exists($folder)) {
+            return 4;
+        }
         
+        // Everything is fine :)
         return 0;
     }
     
@@ -450,6 +458,9 @@ class UploadHandler
             return false;
         } else if ($cf_error == 3) {
             $file->error = $this->get_error_message('cf_missing_folder');
+            return false;
+        } else if ($cf_error == 4) {
+            $file->error = $this->get_error_message('cf_missing_subfolder');
             return false;
         }
 
