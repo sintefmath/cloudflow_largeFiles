@@ -39,6 +39,8 @@ class UploadHandler
         'min_height' => 'Image requires a minimum height',
         'abort' => 'File upload aborted',
         'image_resize' => 'Failed to resize image',
+        'cf_missing_token' => 'Missing keystone token in cookie',
+        'cf_missing_gss_path' => 'Missing GSS path in cookie',
         'cf_unauthorized' => 'Invalid keystone token',
         'cf_invalid_path' => 'Not write access to given path. Keystone username not the same as gss folder.',
         'cf_missing_folder' => 'Found no webdav folder for given user',
@@ -230,14 +232,23 @@ class UploadHandler
     protected function validate_CloudFlow() {
         /**
          *  Perform three checks: 
-         *  1) Valid keystone token
-         *  2) same keystone username as in gssPath
-         *  3) does user have a webdav enabled folder?
-         *  4) does the subfolder exist?
+         *  1) Missing keystone token in cookie
+         *  2) Missing GSS path in cookie
+         *  3) Valid keystone token
+         *  4) same keystone username as in gssPath
+         *  5) does user have a webdav enabled folder?
+         *  6) does the subfolder exist?
          * 
          *  returns one of the above, or 0 if all is good :)
          */
 
+        if (!array_key_exists('CF_TOKEN', $_COOKIE)) {
+           return 1;
+        }
+
+        if (!array_key_exists('CF_GSS_PATH', $_COOKIE)) {
+            return 2;
+        }
         
         $sessionToken = $_COOKIE["CF_TOKEN"];
         $gssPath = $_COOKIE["CF_GSS_PATH"];
@@ -248,23 +259,23 @@ class UploadHandler
             error_log("Found uname: " . $uname);
         } catch (Exception $e) {
             error_log("Did not find username from keystone");
-            return 1;
+            return 3;
         }
         
         $splittedPath = explode("/",str_replace("csuc://", "", $gssPath));
         if ($uname != $splittedPath[0]) {
-            return 2;
+            return 4;
         }
         
         $basePath = "/home/ubuntu/webdav/";
         $mountedFolder = $basePath . $uname;
         if (!file_exists($mountedFolder)) {
-            return 3;
+            return 5;
         }
         
         $folder = $basePath . str_replace("csuc://", "", $gssPath);
         if (!file_exists($folder)) {
-            return 4;
+            return 6;
         }
         
         // Everything is fine :)
@@ -451,15 +462,21 @@ class UploadHandler
         // make a function that checks keystone token, token vs gss url, and username folder existence.
         $cf_error = $this->validate_CloudFlow();
         if ($cf_error == 1) {
-            $file->error = $this->get_error_message('cf_unauthorized');
+            $file->error = $this->get_error_message('cf_missing_token');
             return false;
         } else if ($cf_error == 2) {
-            $file->error = $this->get_error_message('cf_invalid_path');
+            $file->error = $this->get_error_message('cf_missing_gss_path');
             return false;
         } else if ($cf_error == 3) {
-            $file->error = $this->get_error_message('cf_missing_folder');
+            $file->error = $this->get_error_message('cf_unauthorized');
             return false;
         } else if ($cf_error == 4) {
+            $file->error = $this->get_error_message('cf_invalid_path');
+            return false;
+        } else if ($cf_error == 5) {
+            $file->error = $this->get_error_message('cf_missing_folder');
+            return false;
+        } else if ($cf_error == 6) {
             $file->error = $this->get_error_message('cf_missing_subfolder');
             return false;
         }
