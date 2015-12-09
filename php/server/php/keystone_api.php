@@ -11,7 +11,7 @@
 <?php
 
 // Define some constants that we need below. 
-define("KEYSTONE_URL", "https://openstack.arctur.si/keystone/");
+define("KEYSTONE_URL", "https://cloudflow.csuc.cat/keystone/");
 
 // Where to store the token id (ie. which cookie key)
 define("CF_FC_TOKEN_KEY", "CF_FC_TOKEN");
