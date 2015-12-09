@@ -182,8 +182,8 @@ public class ProxyFilter implements Filter {
         if ( internalRequest ) {
             newResponse = wrapper.toString()
 		.replace("http://84.88.14.233:8080/", "https://cloudflow.csuc.cat/hpcservice/");
-	    //.replace("http://api.eu-cloudflow.eu:80/", "http://api.eu-cloudflow.eu:80/sintef")
-	    //       .replace("http://api.eu-cloudflow.eu:443/", "http://api.eu-cloudflow.eu:443/sintef/")
+	    //      .replace("http://api.eu-cloudflow.eu:80/", "http://api.eu-cloudflow.eu:80/sintef")
+	    //      .replace("http://api.eu-cloudflow.eu:443/", "http://api.eu-cloudflow.eu:443/sintef/")
 	    //      .replace("http://api.eu-cloudflow.eu/", "http://api.eu-cloudflow.eu/sintef/");
             log("\n\t\t\tINTERNAL REQUEST!!!!\n\n");
 	    log("New response: \n" + newResponse);
@@ -192,8 +192,8 @@ public class ProxyFilter implements Filter {
         } else {
             newResponse = wrapper.toString()
 		.replace("http://84.88.14.223:8080/", "https://cloudflow.csuc.cat/hpcservice/");
-    //.replace("http://api.eu-cloudflow.eu:80/", "http://api.eu-cloudflow.eu:80/sintef/")
-	    //.replace("http://api.eu-cloudflow.eu:80/", "https://api.eu-cloudflow.eu:443/")
+            //      .replace("http://api.eu-cloudflow.eu:80/", "http://api.eu-cloudflow.eu:80/sintef/")
+	    //      .replace("http://api.eu-cloudflow.eu:80/", "https://api.eu-cloudflow.eu:443/")
 	    //      .replace("https://api.eu-cloudflow.eu:443/", "https://api.eu-cloudflow.eu:443/sintef/")
 	    //      .replace("https://api.eu-cloudflow.eu/", "https://api.eu-cloudflow.eu/sintef/");
         }

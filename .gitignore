@@ -4,3 +4,5 @@ node_modules
 /nbproject/private/
 
 keystone_admintoken.php
+/php/nbproject/private/
+/service/target/

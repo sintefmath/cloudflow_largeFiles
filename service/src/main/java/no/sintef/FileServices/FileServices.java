@@ -54,8 +54,11 @@ public class FileServices {
         // TODO: Feel free to add more output parameters (they must be Holder<T> objects
         
         // TODO: url should point to the web pages you want to include (should be available under "https://api.eu-cloudflow.eu/[...]"
-        String url = "https://bigfileservice.csuc.cat/cf-large-files/cloudflow.html";
+        String url = "https://cloudflow.csuc.cat/bigfiles/cf-large-files/cloudflow.html";
         
+        log("largeFile web service called with the following input parameters:\n" +
+                "folder: " + folder + "\n" +
+                "extraParameters: " + extraParameters + "\n");
         
         // Parsing of extraParameters needed to contact WFM
         String WFM = getExtraParameter(extraParameters, "WFM");
@@ -74,7 +77,8 @@ public class FileServices {
                 // TODO: add your extra input parameters here javascript variables here
                 + "sessionToken = \"" + sessionToken + "\";\n"
                 + "serviceID = \"" + serviceID + "\";\n"
-                + "WFM = \"" + WFM + "\";\n"
+                + "gssPath = \"" + folder + "\";"
+                + "soapWFM = \"" + WFM + "\";\n"
                 + "hasCloudflowVariables = true;\n"
                 + "</script>\n"
                 + "</head>\n"
