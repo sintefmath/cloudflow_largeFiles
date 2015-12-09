@@ -323,7 +323,6 @@ function keystone_check_login() {
  * @return username of the user related to the token
  */
 function keystone_get_username($token) {
-    error_log("Trying to validate the following token: " . $token . ", towards the following endpoint: ". KEYSTONE_URL);
     $keystone = new Keystone(KEYSTONE_URL);
     return $keystone->getUsername($token);
 }

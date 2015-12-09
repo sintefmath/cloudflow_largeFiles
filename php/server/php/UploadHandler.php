@@ -225,6 +225,7 @@ class UploadHandler
         
         $gssPath = $_COOKIE["CF_GSS_PATH"];
         $up_dir = str_replace("csuc://", "/var/www/webdav/", $gssPath);
+        error_log("got upload_dir: ".$up_dir);
                 
         return $up_dir;
     }
