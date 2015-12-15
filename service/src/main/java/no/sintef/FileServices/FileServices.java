@@ -104,14 +104,55 @@ public class FileServices {
     public void fileChooser(@WebParam(name="serviceID", targetNamespace=namespace, mode=WebParam.Mode.IN) String serviceID, 
             @WebParam(name="sessionToken", targetNamespace=namespace, mode=WebParam.Mode.IN) String sessionToken,
             @WebParam(name="extraParameters", targetNamespace=namespace, mode=WebParam.Mode.IN) String extraParameters,
+            @WebParam(name="webdavToken", targetNamespace=namespace, mode=WebParam.Mode.IN) String webdavToken,
             @WebParam(name="description", targetNamespace=namespace, mode=WebParam.Mode.IN) String description,
             @WebParam(name="filter", targetNamespace=namespace, mode=WebParam.Mode.IN) String filter,
             @WebParam(name="fileSelected", targetNamespace=namespace, mode=WebParam.Mode.OUT) Holder<String> fileSelected,
             @WebParam(name="status_base64", targetNamespace=namespace, mode=WebParam.Mode.OUT) Holder<String> status_base64
             ) {
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "FileUI::fileChooser - extraParameters: " + extraParameters);        
+
+        // Parameters that the FileChooser WS needs to know to correctly show and configure the file chooser:
+        String soapWFM = getExtraParameter(extraParameters, "WFM");
+        String newWorkflowURL = getExtraParameter(extraParameters, "newWorkflowURL");
+        String phpFileChooser = getExtraParameter(extraParameters, "phpFileChooser");
         
-        status_base64.value = "UNSET";
-        fileSelected.value = "UNSET";
+        if (!soapWFM.endsWith("?wsdl")) {
+            soapWFM = soapWFM + "?wsdl";
+        }
+        if (!phpFileChooser.endsWith("/")) {
+            phpFileChooser = phpFileChooser + "/";
+        }
+        
+        log("::fileChooser-0.2 - extraParameters found are as follows:\n" +
+                "WFM - " + soapWFM + "\nnewWorkflowURL - " + newWorkflowURL + "\nphpFileChooser - " + phpFileChooser);
+        
+        String containingHtml = "<html>\n"
+                + "<head>\n"
+                + "<title>FileChooser</title>\n"
++ "                <style>html, body  {\n" +
+"                height: 100%;\n" +
+"                overflow: hidden;\n" +
+"            }\n" +
+"            html, body, iframe {\n" +
+"                margin: 0;\n" +
+"                padding: 0;\n" +
+"            }\n</style>"
+                +"<script type='text/javascript'>\n"
+                // Set the variables so that the HTML page in the iframe will have access to them through parent
+                + "sessionToken = \"" + sessionToken + "\";\n"
+                + "webdavToken = \"" + webdavToken + "\";\n"
+                + "soapWFM = \"" + soapWFM + "\";\n"
+                + "newWorkflowURL = \"" + newWorkflowURL + "\";\n"
+                + "hasCloudflowVariables = true;\n"
+                + "</script>\n"
+                + "</head>\n"
+                + "<body>\n"
+                + "<iframe src='" + phpFileChooser + "?filter=" + filter + "&description=" + description + "&serviceID=" + serviceID + "' width='100%' height='100%' id=filechooserframe seamless='1' style='border-style: none; overflow: hidden; position: fixed;'>\n"
+                + "</body>\n"
+                + "</html>";
+        status_base64.value = DatatypeConverter.printBase64Binary(containingHtml.getBytes());
+        fileSelected.value="UNSET";
     }
     
 

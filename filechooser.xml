@@ -1,0 +1,18 @@
+<workflow URI="">
+  <output URI="#out1" ID="s3io6"/>
+  <input URI="#sessionToken" ID="sessionToken" x="13" y="39"/>
+  
+  <services>
+    <sequence>
+      <service URI="http://cloudflow.csuc.cat/sintef/app/fileChooser01.owl#fileChooser_Service" x="329" y="82">
+        <input URI="http://cloudflow.csuc.cat/sintef/app/fileChooser01.owl#sessionToken" ID="sessionToken"/>
+        <input URI="http://cloudflow.csuc.cat/sintef/app/fileChooser01.owl#serviceID"/>
+        <input URI="http://cloudflow.csuc.cat/sintef/app/fileChooser01.owl#filter" value=""/>
+        <input URI="http://cloudflow.csuc.cat/sintef/app/fileChooser01.owl#extraParameters" value="WFM=https://cloudflow.csuc.cat/WFM/WorkflowManager2Service/services/SOAP?wsdl,newWorkflowURL=https://cloudflow.csuc.cat/start_workflow_withArg.php,phpFileChooser=https://cloudflow.csuc.cat/bigfiles/filechooser/filechooser_php/index.html"/>
+        <input URI="http://cloudflow.csuc.cat/sintef/app/fileChooser01.owl#description" value="SGVyZSB5b3UgY2FuIGJyb3dzZSBmb2xkZXJzIGFuZCBmaWxlcyBmcm9tIHZhcmlvdXMgc291cmNlcy4="/>
+        <output URI="http://cloudflow.csuc.cat/sintef/app/fileChooser01.owl#status_base64" ID="s3io5"/>
+        <output URI="http://cloudflow.csuc.cat/sintef/app/fileChooser01.owl#fileSelected" ID="s3io6"/>
+      </service>
+    </sequence>
+  </services>
+</workflow>
