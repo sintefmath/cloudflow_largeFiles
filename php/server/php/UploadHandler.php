@@ -265,10 +265,11 @@ class UploadHandler
         
         $splittedPath = explode("/",str_replace("csuc://", "", $gssPath));
         if ($uname != $splittedPath[0]) {
+	   error_log("Not the same username (".$name.") and splittedPath(".$splittedPath[0].")...");
             return 4;
         }
         
-        $basePath = "/home/ubuntu/webdav/";
+        $basePath = "/var/www/webdav/";
         $mountedFolder = $basePath . $uname;
         if (!file_exists($mountedFolder)) {
             return 5;
