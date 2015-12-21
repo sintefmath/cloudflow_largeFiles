@@ -192,7 +192,7 @@ public class ProxyFilter implements Filter {
         // If the request is external, your wsdl needs to use https:// protocol    
         } else {
             newResponse = wrapper.toString()
-		.replace("http://84.88.14.223:8080/", "https://cloudflow.csuc.cat/hpcservice/");
+		.replace("http://84.88.14.233:8080/", "https://cloudflow.csuc.cat/hpcservice/");
                 //.replace("http:")
             
 
