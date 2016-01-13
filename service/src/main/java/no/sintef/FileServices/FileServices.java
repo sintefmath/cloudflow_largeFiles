@@ -56,6 +56,10 @@ public class FileServices {
         // TODO: url should point to the web pages you want to include (should be available under "https://api.eu-cloudflow.eu/[...]"
         String url = "https://cloudflow.csuc.cat/bigfiles/cf-large-files/php/cloudflow.html";
         
+        if (!folder.endsWith("/")) {
+            folder = folder + "/";
+        }
+        
         log("largeFile web service called with the following input parameters:\n" +
                 "folder: " + folder + "\n" +
                 "extraParameters: " + extraParameters + "\n");
