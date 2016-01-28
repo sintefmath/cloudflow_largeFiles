@@ -68,7 +68,7 @@ function done() {
             + "<ns:" + messageName + '>'
             + "<serviceID>" + serviceID + "</serviceID>"
             + "<sessionToken>" + sessionToken + "</sessionToken>"
-            + "<xmlOutputs_base64>" + xmlOutputs_base64 + "</xmlOutputs_base64>"
+            + "<serviceOutputs_base64>" + xmlOutputs_base64 + "</serviceOutputs_base64>"
             // ARGUMENTER HER <ns:serviceID>....</ns:serviceID>;
             + "</ns:" + messageName + ">"
             + ' </soapenv:Body>'
