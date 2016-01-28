@@ -54,8 +54,8 @@ function done() {
     console.log("We should proceed to the next step now");
 
     var xmlOutputs_base64 = "";
-    //xmlOutputs = "<fileKey>" + filekey + "</fileKey>";
-    //xmlOutputs_base64 = btoa(xmlOutputs);
+    xmlOutputs = "<newFiles>Please close this tab and reload folder in the File Chooser</newFiles>";
+    xmlOutputs_base64 = btoa(xmlOutputs);
 
     var namespace = "http://www.eu-cloudflow.eu/dfki/WorkflowManager2/";
     var messageName ="serviceExecutionFinished";
