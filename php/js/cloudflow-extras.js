@@ -54,7 +54,7 @@ function done() {
     console.log("We should proceed to the next step now");
 
     var xmlOutputs_base64 = "";
-    xmlOutputs = "<newFiles>Please close this tab and reload folder in the File Chooser</newFiles>";
+    xmlOutputs = "<ServiceOutputs><newFiles>Please close this tab and reload folder in the File Chooser</newFiles></ServiceOutputs>";
     xmlOutputs_base64 = btoa(xmlOutputs);
 
     var namespace = "http://www.eu-cloudflow.eu/dfki/WorkflowManager2/";
@@ -68,7 +68,7 @@ function done() {
             + "<ns:" + messageName + '>'
             + "<serviceID>" + serviceID + "</serviceID>"
             + "<sessionToken>" + sessionToken + "</sessionToken>"
-            + "<serviceOutputs_base64>" + xmlOutputs_base64 + "</serviceOutputs_base64>"
+            + "<xmlOutputs_base64>" + xmlOutputs_base64 + "</xmlOutputs_base64>"
             // ARGUMENTER HER <ns:serviceID>....</ns:serviceID>;
             + "</ns:" + messageName + ">"
             + ' </soapenv:Body>'
